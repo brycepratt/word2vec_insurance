@@ -19,4 +19,5 @@ def write_one_hot(input, type):
     filename = 'decoding/'+type+'.csv'
 
     with open(filename, 'w', newline=''):
+        print()
         
