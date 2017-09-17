@@ -16,3 +16,17 @@
   text-align: left;
   vertical-align: middle;
 }
+
+#full-screen-loader {
+  position: fixed;
+  top: 0; left: 0;
+  background-color: black;
+  opacity: 0.7;
+  height: 100%; width: 100%;
+  z-index: 5;
+  background-image: url('/assets/images/loader.gif');
+  background-position: center;
+  background-repeat: no-repeat;
+
+  display: none;
+}
