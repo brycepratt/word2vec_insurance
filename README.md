@@ -15,3 +15,10 @@ Cleanse text for these attributes:
 5. Birthdate (Just the year)
 6. Type of Policy (Product, Coverage, Premium, Plan)
 7. Activity (Type, Comments vectorized)
+
+List of Libraries needed:
+1. Numpy
+2. Scipy
+3. Tensorflow
+4. Keras
+5. h5py
