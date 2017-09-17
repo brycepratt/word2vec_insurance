@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script src="assets/js/jquery-3.2.1.min.js"></script>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <script src="assets/js/moment.js"></script>
+
+  <link rel="stylesheet" href="assets/css/bootstrap-datetimepicker.min.css" type="text/css">
+  <script src="assets/js/bootstrap-datetimepicker.min.js"></script>
+  <script>
+
+      var placeSearch, autocomplete;
+
+
+      function initAutocomplete() {
+
+        autocomplete = new google.maps.places.Autocomplete(
+            /** @type {!HTMLInputElement} */(document.getElementById('address')),
+            {types: ['geocode']});
+      }
+
+      function getCoordinates() {
+        var place = autocomplete.getPlace();
+        return {
+          'latitude': place.geometry.location.lat(),
+          'longitude': place.geometry.location.lng()
+        };
+      }
+
+      function geolocate() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            var geolocation = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+            var circle = new google.maps.Circle({
+              center: geolocation,
+              radius: position.coords.accuracy
+            });
+            autocomplete.setBounds(circle.getBounds());
+          });
+        }
+      }
+
+    </script>
+
+  <script type="text/javascript">
+            $(function () {
+                $('#date').datetimepicker({format: 'MM/DD/YYYY'});
+            });
+        </script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTGiMXrGa9Ti4vztS3gh1_C0lcADa3EYo&libraries=places&callback=initAutocomplete"
+              async defer></script>
+
+  <link rel="stylesheet" href="assets/css/toastr.min.css" type="text/css">
+  <link rel="stylesheet" href="assets/css/custom.css" type="text/css">
+  <script src="assets/js/toastr.min.js"></script>
+  <script>
+  function getSelectedOption(id) {
+    var element = document.getElementById(id);
+    return element.options[element.selectedIndex].text;
+  }
+
+  function validateForm() {
+    var chooseOne = "Choose one:";
+
+    var maritalStatus = getSelectedOption('status');
+    if (maritalStatus === chooseOne) {
+      toastr.error('Please select a marital status!');
+      return false;
+    }
+
+    var sex = getSelectedOption('sex');
+    if (sex === chooseOne) {
+      toastr.error('Please select a sex');
+      return false;
+    }
+
+    var name = document.getElementById('name').value;
+    if (name === undefined || name.length === 0) {
+      toastr.error('Please enter a first name');
+      return false;
+    }
+
+    var address = document.getElementById('address').value;
+    if (address === undefined || address.length === 0) {
+      toastr.error('Please enter an address');
+      return false;
+    }
+
+    var dob = document.getElementById('date').value;
+    if (dob === undefined || dob.length === 0) {
+      toastr.error('Please enter a date of birth');
+      return false;
+    }
+
+    var product = getSelectedOption('product');
+    if (product === chooseOne) {
+      toastr.error('Please enter a product');
+      return false;
+    }
+
+    var coverage = getSelectedOption('coverage');
+    if (coverage === chooseOne) {
+      toastr.error('Please enter a coverage');
+      return false;
+    }
+
+    var plan = getSelectedOption('plan');
+    if (plan === chooseOne) {
+      toastr.error('Please enter a plan');
+      return false;
+    }
+
+    return true;
+  }
+
+  function callServer() {
+    var payload = {
+      'marital_status': getSelectedOption('status'),
+      'sex': getSelectedOption('sex'),
+      'first_name': getElement('name'),
+      'address': getCoordinates(),
+      'dob_year': new Date(getElement('date')).getFullYear(),
+      'product': getSelectedOption('product'),
+      'coverage': getSelectedOption('coverage'),
+      'premium': getElement('premium'),
+      'plan': getSelectedOption('plan')
+    };
+    console.log(payload);
+    console.log("call api!");
+
+    $('#myModal').modal();
+  }
+
+  function getElement(id) {
+    return document.getElementById(id).value;
+  }
+
+  function submitRequest() {
+    if (validateForm()) {
+      callServer();
+    }
+  }
+
+  </script>
+  <style>
+    #grad1 {
+        height: 160px;
+        background: #5190db; /* For browsers that do not support gradients */
+        background: -webkit-linear-gradient(top, #5190db, white); /* For Safari 5.1 to 6.0 */
+        background: -o-linear-gradient(bottom, #5190db, white); /* For Opera 11.1 to 12.0 */
+        background: -moz-linear-gradient(bottom, #5190db, white); /* For Firefox 3.6 to 15 */
+        background: linear-gradient(to bottom, #5190db, white); /* Standard syntax (must be last) */
+        top:0;
+    }
+    #grad2 {
+      height: 160px;
+      background: white;
+      background: -webkit-linear-gradient(top, white, #a5e866); /* For Safari 5.1 to 6.0 */
+      background: -o-linear-gradient(bottom, white, #a5e866); /* For Opera 11.1 to 12.0 */
+      background: -moz-linear-gradient(bottom, white, #a5e866); /* For Firefox 3.6 to 15 */
+      background: linear-gradient(to bottom, white, #a5e866); /* Standard syntax (must be last) */
+      bottom: 0;
+      position: fixed;
+    }
+  </style>
+</head>
+
+<body>
+
+<div id="grad1">
+<div class="container">
+  <div class="row">
+
+    <div style="text-align: center;" class="col-md-12">
+      <img src='assets/images/Vitech-Logo.png' style='width:30%; padding-top: 10px; top:0;'>
+      <h2 id = "header" style="font-weight: bold; ">Insurance Portal</h2>
+    </div>
+  </div>
+  <br>
+
+  <div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8" style="padding-bottom:15px">
+        <fieldset>
+          <legend>Personal Information:</legend>
+        <div class="form-group">
+          <label for="status">Marital Status:</label>
+          <select class="form-control" id="status">
+            <option selected disabled>Choose one:</option>
+            <option>Married</option>
+            <option>Not Married</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="sex">Sex:</label>
+          <select class="form-control" id="sex">
+            <option selected disabled>Choose one:</option>
+            <option>Male</option>
+            <option>Female</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="name">First Name:</label>
+          <input type="text" class="form-control" placeholder="Enter your first name" id="name"></input>
+        </div>
+        <div class="form-group">
+          <label for="address">Address:</label>
+          <input type="text" class="form-control" id="address" placeholder="Enter your address" onFocus="geolocate()"></input>
+        </div>
+        <div class="form-group">
+          <label for="date">Date of Birth:</label>
+          <input type="text" class="form-control" id="date" placeholder="Enter your date of birth"></input>
+        </div>
+      </fieldset>
+        <br>
+        <fieldset>
+          <legend>Insurance Policy:</legend>
+          <div class="form-group">
+            <label for="product">Product:</label>
+            <select class="form-control" id="product">
+              <option selected disabled>Choose one:</option>
+              <option>Dental</option>
+              <option>Accidental</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="coverage">Coverage:</label>
+            <select class="form-control" id="coverage">
+              <option selected disabled>Choose one:</option>
+              <option>Single</option>
+              <option>Family</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="premium">Premium:</label>
+            <input type="number" class="form-control" id="premium" min="1" value="1"></input>
+          </div>
+
+          <div class="form-group">
+            <label for="plan">Plan:</label>
+            <select class="form-control" id="plan">
+              <option selected disabled>Choose one:</option>
+              <option>Regular</option>
+              <option>Silver</option>
+              <option>Gold</option>
+            </select>
+          </div>
+        </fieldset>
+      <button onclick="submitRequest()" class="btn btn-default">Submit</button>
+    </div>
+  <div class="col-md-2"></div>
+  </div>
+
+</div>
+</div>
+
+<div class="modal fade" id="myModal" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" style="background:#65a5f2">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Modal Header</h4>
+      </div>
+      <div class="modal-body">
+        <p>Some text in the modal.</p>
+      </div>
+      <div class="modal-footer" style="background:#baf285">
+        <button type="button" class="btn btn-default" data-dismiss="modal" >Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>
