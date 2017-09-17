@@ -1,5 +1,4 @@
 import numpy as np
-import csv
 
 
 def count_chars(inp):
@@ -16,6 +15,19 @@ def count_chars(inp):
         res.append(dict[char])
     return res
 
+
+def parse_query(name, sex, lat, long, birth, product, coverage, premium, plan):
+    name = count_chars(name)
+    sex = sex_format(sex)
+    lat = lat_long_format(lat)
+    long = lat_long_format(long)
+    birth = birth_format(birth)
+    product = product_format(product)
+    coverage = coverage_format(coverage)
+    premium = premium_format(premium)
+    plan = plan_format(plan)
+    curr_inp = name + sex + lat + long + birth + product + coverage + premium + plan
+    return np.asarray(curr_inp)
 
 def read_data(filename):
     input_x = []
