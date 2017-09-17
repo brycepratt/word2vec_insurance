@@ -9,7 +9,7 @@ import sys
 import os
 
 X = parse_query(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5], sys.argv[6], sys.argv[7], sys.argv[8], sys.argv[9])
-
+X = np.reshape(X, (1, 39))
 # load json and create model
 script_dir = os.path.dirname(__file__)
 json_file = open(os.path.join(script_dir, 'weights/model.json'), 'r')
