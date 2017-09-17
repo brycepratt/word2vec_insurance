@@ -134,12 +134,27 @@
       'premium': getElement('premium'),
       'plan': getSelectedOption('plan')
     };
+
+    var types = ["Mail Flyer", "Email", "Call", "Letter"];
+
+    $('#full-screen-loader').fadeIn(400);
     $.post('/get-prediction', payload, function (data, status) {
-      console.log("here");
-      console.log(data);
+      var starting = "";
+      for (var i = 0; i < types.length; i++) {
+        if (data.startsWith(types[i])) {
+          starting = types[i];
+          break;
+        }
+      }
+
+      var promotion = data.replace(starting + ' ', '');
+      document.getElementById('promotion').innerHTML='<span style="font-weight: bold;">' + starting + ": </span>" + promotion;
+      $('#full-screen-loader').fadeOut(400);
+      $('#myModal').modal()
+
     });
 
-    $('#myModal').modal();
+    ;
   }
 
   function getElement(id) {
@@ -177,6 +192,7 @@
 </head>
 
 <body>
+  <div id="full-screen-loader"></div>
 
 <div id="grad1">
 <div class="container">
@@ -274,10 +290,10 @@
     <div class="modal-content">
       <div class="modal-header" style="background:#65a5f2">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Modal Header</h4>
+        <h3 class="modal-title"><span style="font-weight: bold;">Recommended Promotion</span></h3>
       </div>
       <div class="modal-body">
-        <p>Some text in the modal.</p>
+        <p style="font-size: 1.3em" id="promotion"></p>
       </div>
       <div class="modal-footer" style="background:#baf285">
         <button type="button" class="btn btn-default" data-dismiss="modal" >Close</button>
