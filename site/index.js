@@ -18,14 +18,15 @@ app.get('/', function (req, res) {
 app.post('/get-prediction', function(req, res) {
 	var options = {
 		// mode: 'text',
-		// pythonPath: 'path/to/python',
+		 pythonPath: '/usr/bin/python3',
 		// pythonOptions: ['-u'],
 		// scriptPath: 'path/to/my/scripts',
-		args: [req.marital_status, req.sex, req.first_name, req.address.latitude, req.address.longitude, req.dob_year, req.product, req.coverage, req.premium, req.plan],
+		args: [req.body.first_name, req.body.sex, req.body.address.latitude, req.body.address.longitude, req.body.dob_year, req.body.product, req.body.coverage, req.body.premium, req.body.plan],
 	};
 
-	PythonShell.run((__dirname + '/../models/predict.py'), options, function (err, results) {
+	PythonShell.run(('../models/predict.py'), options, function (err, results) {
 		if (err) {
+			console.log(err);
 			return res.status(500).send('Error making prediction.');
 		};
 		return res.send(results[0]);

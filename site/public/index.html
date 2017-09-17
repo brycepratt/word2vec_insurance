@@ -125,18 +125,19 @@
 
   function callServer() {
     var payload = {
-      'marital_status': getSelectedOption('status'),
-      'sex': getSelectedOption('sex'),
+      'sex': getSelectedOption('sex').charAt(0),
       'first_name': getElement('name'),
       'address': getCoordinates(),
-      'dob_year': new Date(getElement('date')).getFullYear(),
+      'dob_year': new Date(getElement('date')).getFullYear() - 1900,
       'product': getSelectedOption('product'),
       'coverage': getSelectedOption('coverage'),
       'premium': getElement('premium'),
       'plan': getSelectedOption('plan')
     };
-    console.log(payload);
-    console.log("call api!");
+    $.post('/get-prediction', payload, function (data, status) {
+      console.log("here");
+      console.log(data);
+    });
 
     $('#myModal').modal();
   }

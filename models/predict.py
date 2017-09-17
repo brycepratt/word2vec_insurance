@@ -6,16 +6,18 @@ from helper import decode_delivery
 from helper import decode_message
 import numpy as np
 import sys
+import os
 
-X = parse_query(sys.argv[0], sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5], sys.argv[6], sys.argv[7], sys.argv[8])
+X = parse_query(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5], sys.argv[6], sys.argv[7], sys.argv[8], sys.argv[9])
 
 # load json and create model
-json_file = open('model.json', 'r')
+script_dir = os.path.dirname(__file__)
+json_file = open(os.path.join(script_dir, 'weights/model.json'), 'r')
 loaded_model_json = json_file.read()
 json_file.close()
 loaded_model = model_from_json(loaded_model_json)
 # load weights into new model
-loaded_model.load_weights("model.h5")
+loaded_model.load_weights(os.path.join(script_dir, "weights/model.h5"))
 
 loaded_model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 temp_one_hot = loaded_model.predict(X)
