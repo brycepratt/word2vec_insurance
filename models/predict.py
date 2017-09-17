@@ -24,4 +24,4 @@ temp_index = np.argmax(temp_one_hot)
 delivery = temp_index % 5
 message = temp_index // 5
 
-print(decode_delivery(delivery),decode_message(message))
+print(decode_delivery(delivery), decode_message(message))

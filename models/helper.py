@@ -88,18 +88,8 @@ def coverage_format(inp):
 
 
 def premium_format(inp):
-    if inp == 18:
-        return [1, 0, 0, 0, 0, 0]
-    if inp == 8:
-        return [0, 1, 0, 0, 0, 0]
-    if inp == 23:
-        return [0, 0, 1, 0, 0, 0]
-    if inp == 13:
-        return [0, 0, 0, 1, 0, 0]
-    if inp == 10:
-        return [0, 0, 0, 0, 1, 0]
-    else:  # if premium is 5
-        return [0, 0, 0, 0, 0, 1]
+    res = [float(inp) / 100.0]
+    return res
 
 
 def plan_format(inp):

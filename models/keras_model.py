@@ -9,7 +9,7 @@ X, y = shuffle(X, y, random_state=42)
 
 # create model
 model = Sequential()
-model.add(Dense(100, input_dim=44, activation='relu'))
+model.add(Dense(100, input_dim=39, activation='relu'))
 model.add(Dense(75, activation='relu'))
 model.add(Dense(55, activation='softmax'))
 # Compile model
