@@ -1,12 +1,13 @@
+import os
+import sys
+import numpy as np
 from keras.models import Sequential
 from keras.layers import Dense
 from keras.models import model_from_json
 from helper import parse_query
 from helper import decode_delivery
 from helper import decode_message
-import numpy as np
-import sys
-import os
+
 
 X = parse_query(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5], sys.argv[6], sys.argv[7], sys.argv[8], sys.argv[9])
 X = np.reshape(X, (1, 39))

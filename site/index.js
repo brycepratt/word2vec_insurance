@@ -25,14 +25,21 @@ app.post('/get-prediction', function(req, res) {
 		args: [req.body.first_name, req.body.sex, req.body.address.latitude, req.body.address.longitude, req.body.dob_year, req.body.product, req.body.coverage, req.body.premium, req.body.plan],
 	};
 
-	PythonShell.run(('../models/predict.py'), options, function (err, results) {
-		if (err) {
-			console.log(err);
-			return res.status(500).send('Error making prediction.');
-		};
-		return res.send(results[0]);
-	});
+	var pyshell = new PythonShell(('../models/predict.py'), options);
 
+	var sentMessage = false;
+	pyshell.on('message', function (message) {
+		if (!sentMessage) {
+            res.send(message);
+            sentMessage = true;
+        };
+	});
+	pyshell.end(function(err) {
+		if (err) console.log(err);
+		if (!sentMessage) {
+			return res.status(500).send('Error making prediction.');
+		}''
+	});
 });
 
 var server = app.listen(80, function() {
