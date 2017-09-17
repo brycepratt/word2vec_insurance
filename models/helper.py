@@ -29,6 +29,7 @@ def parse_query(name, sex, lat, long, birth, product, coverage, premium, plan):
     curr_inp = name + sex + lat + long + birth + product + coverage + premium + plan
     return np.asarray(curr_inp)
 
+
 def read_data(filename):
     input_x = []
     output = []
@@ -128,3 +129,41 @@ def output_format(msg_id, method):
     res = np.zeros(55)
     res[index] = 1
     return np.asarray(res)
+
+
+def decode_delivery(inp):
+    int_inp = int(inp)
+    if int_inp == 0:
+        return 'Mail Flyer'
+    if int_inp == 1:
+        return 'Email'
+    if int_inp == 2:
+        return 'Letter'
+    if int_inp == 3:
+        return 'Call'
+    else:  # if 4
+        return 'Mail'
+
+
+def decode_message(inp):
+    code = int(inp)
+    if code == 0:
+        return "Acme Insurance is now offering Accident Insurance to bundle with your Dental coverage."
+    if code == 1:
+        return "Protect yourself and yourself and your family from potential harm with Acme's improved Accident coverage."
+    if code == 2:
+        return "Accidents increase by 20% during the winter.  Protect yourself and your family and save 10% on your first year of accident insurance."
+    if code == 3:
+        return "Bundle your Dental coverage with Accident coverage and get a free month."
+    if code == 4:
+        return "Use the promocode FREESPOUSE when getting Accident coverage and get free spousal coverage for 6 months if you qualify."
+    if code == 5:
+        return "Bundle your Dental coverage with Accident coverage and get a free month."
+    if code == 6:
+        return "Qualifying new enrollees will get a year of free financial consulting with promo code FINCON"
+    if code == 7:
+        return "Qualifying new enrollees will get a year of free financial consulting with promo code FINCON"
+    if code == 8:
+        return "Protect yourself and yourself and your family from potential harm with Acme's improved Accident coverage."
+    else:  # if code is 9
+        return "Use the promocode FREESPOUSE when getting Accident coverage and get free spousal coverage for 6 months if you qualify."
