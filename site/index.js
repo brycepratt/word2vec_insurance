@@ -11,6 +11,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 app.get('/', function (req, res) {
+	console.log('requested root');
 	res.sendFile( __dirname + '/public/index.html');
 });
 
@@ -34,6 +35,6 @@ app.post('/get-prediction', function(req, res) {
 
 });
 
-var server = app.listen(8081, function() {
+var server = app.listen(80, function() {
 	console.log('Server started.');
 });
